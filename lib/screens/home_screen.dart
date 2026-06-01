@@ -1,187 +1,522 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+
 import '../data/wisata_data.dart';
 import '../widgets/wisata_card.dart';
-import '../utils/constants.dart';
-import 'about_screen.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 
 class HomeScreen extends StatelessWidget {
   final VoidCallback onProfileTap;
 
   const HomeScreen({
-    Key? key,
+    super.key,
     required this.onProfileTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffF4F7FB),
+
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 30),
 
-            // HEADER
-            Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 10,
-              ),
+            /// HERO SECTION
+            Stack(
+              children: [
+
+                /// BACKGROUND IMAGE
+                Container(
+                  height: 380,
+
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                        "assets/images/Lembahdamai.png",
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+
+                /// DARK OVERLAY
+                Container(
+                  height: 380,
+                  color: Colors.black.withOpacity(0.45),
+                ),
+
+                /// CONTENT
+                SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+
+                    child: Column(
+                      crossAxisAlignment:
+                          CrossAxisAlignment.start,
+
+                      children: [
+
+                        /// TOP BAR
+                        Row(
+                          mainAxisAlignment:
+                              MainAxisAlignment
+                                  .spaceBetween,
+
+                          children: [
+
+                            /// LOGO
+                            Row(
+                              children: [
+
+                                Container(
+                                  padding:
+                                      const EdgeInsets.all(
+                                    10,
+                                  ),
+
+                                  decoration:
+                                      BoxDecoration(
+                                    color: Colors.white
+                                        .withOpacity(0.2),
+
+                                    borderRadius:
+                                        BorderRadius
+                                            .circular(
+                                      16,
+                                    ),
+                                  ),
+
+                                  child: const Icon(
+                                    Icons.landscape,
+                                    color:
+                                        Colors.white,
+                                  ),
+                                ),
+
+                                const SizedBox(width: 12),
+
+                                const Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment
+                                          .start,
+
+                                  children: [
+
+                                    Text(
+                                      "Desa Wisata",
+                                      style: TextStyle(
+                                        color:
+                                            Colors.white70,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+
+                                    Text(
+                                      "SukaDadi",
+                                      style: TextStyle(
+                                        color:
+                                            Colors.white,
+                                        fontSize: 20,
+                                        fontWeight:
+                                            FontWeight
+                                                .bold,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+
+                            /// PROFILE
+                            GestureDetector(
+                              onTap: onProfileTap,
+
+                              child: ClipRRect(
+                                borderRadius:
+                                    BorderRadius
+                                        .circular(50),
+
+                                child: BackdropFilter(
+                                  filter:
+                                      ImageFilter.blur(
+                                    sigmaX: 10,
+                                    sigmaY: 10,
+                                  ),
+
+                                  child: Container(
+                                    padding:
+                                        const EdgeInsets
+                                            .all(10),
+
+                                    decoration:
+                                        BoxDecoration(
+                                      color: Colors
+                                          .white
+                                          .withOpacity(
+                                        0.15,
+                                      ),
+
+                                      shape:
+                                          BoxShape.circle,
+                                    ),
+
+                                    child: const Icon(
+                                      Icons.person,
+                                      color:
+                                          Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 45),
+
+                        /// TITLE
+                        const Text(
+                          "Explore\nBeautiful Nature",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 36,
+                            fontWeight:
+                                FontWeight.bold,
+                            height: 1.2,
+                          ),
+                        ),
+
+                        const SizedBox(height: 14),
+
+                        const Text(
+                          "Temukan wisata terbaik, kuliner khas,\ndan pengalaman desa yang menakjubkan.",
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 15,
+                          ),
+                        ),
+
+                        const SizedBox(height: 30),
+
+                        /// SEARCH BAR
+                        ClipRRect(
+                          borderRadius:
+                              BorderRadius.circular(20),
+
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(
+                              sigmaX: 10,
+                              sigmaY: 10,
+                            ),
+
+                            child: Container(
+                              padding:
+                                  const EdgeInsets.symmetric(
+                                horizontal: 16,
+                              ),
+
+                              decoration: BoxDecoration(
+                                color: Colors.white
+                                    .withOpacity(0.18),
+
+                                borderRadius:
+                                    BorderRadius.circular(
+                                  20,
+                                ),
+                              ),
+
+                              child: const TextField(
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+
+                                decoration:
+                                    InputDecoration(
+                                  border:
+                                      InputBorder.none,
+
+                                  hintText:
+                                      "Cari wisata...",
+
+                                  hintStyle: TextStyle(
+                                    color:
+                                        Colors.white70,
+                                  ),
+
+                                  icon: Icon(
+                                    Icons.search,
+                                    color:
+                                        Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 24),
+
+            /// CATEGORY
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20),
 
               child: Row(
                 mainAxisAlignment:
                     MainAxisAlignment.spaceBetween,
 
-                children: [
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 20,
-                        backgroundColor:
-                            Colors.green.shade100,
+                children: const [
 
-                        child: Icon(
-                          Icons.landscape,
-                          color: Colors.green,
-                        ),
-                      ),
-
-                      SizedBox(width: 10),
-
-                      Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.start,
-
-                        children: [
-                          Text(
-                            "Desa Wisata",
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.black,
-                            ),
-                          ),
-
-                          Text(
-                            "SukaDadi Pesawaran",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight:
-                                  FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                  Text(
+                    "Kategori",
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
 
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: onProfileTap,
-
-                        child: CircleAvatar(
-                          radius: 18,
-                          backgroundColor:
-                              Colors.grey.shade300,
-
-                          child: Icon(
-                            Icons.person,
-                            size: 20,
-                          ),
-                        ),
-                      ),
-
-                      SizedBox(width: 10),
-
-                      Container(
-                        padding: EdgeInsets.all(8),
-
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade200,
-                          shape: BoxShape.circle,
-                        ),
-
-                        child: Icon(
-                          Icons.search,
-                          size: 20,
-                        ),
-                      ),
-                    ],
+                  Text(
+                    "Lihat Semua",
+                    style: TextStyle(
+                      color: Colors.teal,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ],
               ),
             ),
 
-            // SLIDER
+            const SizedBox(height: 16),
+
+            SizedBox(
+              height: 110,
+
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20),
+
+                children: [
+
+                  _categoryItem(
+                    Icons.landscape,
+                    "Alam",
+                    Colors.teal,
+                  ),
+
+                  _categoryItem(
+                    Icons.restaurant,
+                    "Kuliner",
+                    Colors.orange,
+                  ),
+
+                  _categoryItem(
+                    Icons.cabin,
+                    "Camping",
+                    Colors.blue,
+                  ),
+
+                  _categoryItem(
+                    Icons.festival,
+                    "Budaya",
+                    Colors.purple,
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 28),
+
+            /// POPULAR TITLE
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20),
+
+              child: Row(
+                mainAxisAlignment:
+                    MainAxisAlignment.spaceBetween,
+
+                children: const [
+
+                  Text(
+                    "Wisata Populer",
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  Text(
+                    "Explore",
+                    style: TextStyle(
+                      color: Colors.teal,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            /// SLIDER
             CarouselSlider(
               options: CarouselOptions(
-                height: 180,
-                autoPlay: false,
+                height: 420,
                 enlargeCenterPage: true,
+                autoPlay: true,
+                viewportFraction: 0.80,
               ),
 
               items: sliderList.map((item) {
-                return Container(
-                  margin:
-                      EdgeInsets.symmetric(horizontal: 8),
-
-                  decoration: BoxDecoration(
-                    borderRadius:
-                        BorderRadius.circular(15),
-
-                    image: DecorationImage(
-                      image: AssetImage(item.image),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-
-                  child: Container(
-                    padding: EdgeInsets.all(15),
-
-                    alignment: Alignment.bottomLeft,
-
-                    decoration: BoxDecoration(
-                      borderRadius:
-                          BorderRadius.circular(15),
-
-                      color: Colors.black.withOpacity(0.3),
-                    ),
-
-                    child: Text(
-                      item.name,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight:
-                            FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                );
+                return WisataCard(wisata: item);
               }).toList(),
             ),
 
-            // TITLE
-            Padding(
-              padding: EdgeInsets.all(16),
+            const SizedBox(height: 30),
 
-              child: Text(
-                "Destinasi Populer",
+            /// STATISTIK
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20),
+
+              child: Container(
+                padding: const EdgeInsets.all(20),
+
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [
+                      Color(0xff14B8A6),
+                      Color(0xff0EA5E9),
+                    ],
+                  ),
+
+                  borderRadius:
+                      BorderRadius.circular(30),
+
+                  boxShadow: [
+                    BoxShadow(
+                      color:
+                          Colors.teal.withOpacity(0.3),
+
+                      blurRadius: 20,
+                      offset: const Offset(0, 10),
+                    )
+                  ],
+                ),
+
+                child: const Row(
+                  mainAxisAlignment:
+                      MainAxisAlignment.spaceAround,
+
+                  children: [
+
+                    Column(
+                      children: [
+                        Text(
+                          "10K+",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight:
+                                FontWeight.bold,
+                          ),
+                        ),
+
+                        SizedBox(height: 6),
+
+                        Text(
+                          "Pengunjung",
+                          style: TextStyle(
+                            color: Colors.white70,
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    Column(
+                      children: [
+                        Text(
+                          "25+",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight:
+                                FontWeight.bold,
+                          ),
+                        ),
+
+                        SizedBox(height: 6),
+
+                        Text(
+                          "Destinasi",
+                          style: TextStyle(
+                            color: Colors.white70,
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    Column(
+                      children: [
+                        Text(
+                          "4.9",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight:
+                                FontWeight.bold,
+                          ),
+                        ),
+
+                        SizedBox(height: 6),
+
+                        Text(
+                          "Rating",
+                          style: TextStyle(
+                            color: Colors.white70,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 30),
+
+            /// DESTINASI LIST
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20),
+
+              child: const Text(
+                "Semua Destinasi",
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
 
-            // LIST
+            const SizedBox(height: 10),
+
             ListView.builder(
+              itemCount: wisataList.length,
               shrinkWrap: true,
               physics:
-                  NeverScrollableScrollPhysics(),
-
-              itemCount: wisataList.length,
+                  const NeverScrollableScrollPhysics(),
 
               itemBuilder: (context, index) {
                 return WisataCard(
@@ -189,8 +524,138 @@ class HomeScreen extends StatelessWidget {
                 );
               },
             ),
+
+            const SizedBox(height: 30),
+
+            /// CTA SECTION
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20),
+
+              child: Container(
+                padding: const EdgeInsets.all(24),
+
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius:
+                      BorderRadius.circular(30),
+                ),
+
+                child: Column(
+                  children: [
+
+                    const Text(
+                      "Nikmati Pengalaman\nWisata Terbaik",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    const SizedBox(height: 16),
+
+                    const Text(
+                      "Temukan wisata alam, budaya,\ndan kuliner terbaik desa.",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white70,
+                      ),
+                    ),
+
+                    const SizedBox(height: 24),
+
+                    ElevatedButton(
+                      onPressed: () {},
+
+                      style:
+                          ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Colors.teal,
+
+                        padding:
+                            const EdgeInsets.symmetric(
+                          horizontal: 40,
+                          vertical: 16,
+                        ),
+
+                        shape:
+                            RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(
+                            18,
+                          ),
+                        ),
+                      ),
+
+                      child: const Text(
+                        "Explore Sekarang",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight:
+                              FontWeight.bold,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 40),
           ],
         ),
+      ),
+    );
+  }
+
+  /// CATEGORY ITEM
+  Widget _categoryItem(
+    IconData icon,
+    String title,
+    Color color,
+  ) {
+    return Container(
+      width: 90,
+      margin: const EdgeInsets.only(right: 16),
+
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(24),
+
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 15,
+          )
+        ],
+      ),
+
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+
+        children: [
+
+          CircleAvatar(
+            radius: 24,
+            backgroundColor: color.withOpacity(0.15),
+
+            child: Icon(
+              icon,
+              color: color,
+            ),
+          ),
+
+          const SizedBox(height: 12),
+
+          Text(
+            title,
+            style: const TextStyle(
+              fontWeight: FontWeight.w600,
+            ),
+          )
+        ],
       ),
     );
   }

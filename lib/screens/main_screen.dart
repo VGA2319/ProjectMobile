@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
 import 'destinasi_screen.dart';
+import 'favorite_screen.dart';
 import 'profile_screen.dart';
 
 class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
+
   @override
-  _MainScreenState createState() => _MainScreenState();
+  State<MainScreen> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
@@ -28,9 +31,7 @@ class _MainScreenState extends State<MainScreen> {
 
       DestinasiScreen(),
 
-      Center(
-        child: Text("Favorit"),
-      ),
+      const FavoriteScreen(),
 
       ProfileScreen(),
     ];
@@ -49,19 +50,10 @@ class _MainScreenState extends State<MainScreen> {
 
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-
         currentIndex: _selectedIndex,
 
         selectedItemColor: Colors.green,
         unselectedItemColor: Colors.grey,
-
-        selectedLabelStyle: const TextStyle(
-          color: Colors.green,
-        ),
-
-        unselectedLabelStyle: const TextStyle(
-          color: Colors.grey,
-        ),
 
         onTap: _onItemTapped,
 

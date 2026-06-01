@@ -2,14 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models/wisata.dart';
 import '../utils/constants.dart';
+import '../data/favorite_data.dart';
 
-class DetailScreen extends StatelessWidget {
+class DetailScreen extends StatefulWidget {
   final Wisata wisata;
 
-  DetailScreen({required this.wisata});
+  const DetailScreen({
+    super.key,
+    required this.wisata,
+  });
 
+  @override
+  State<DetailScreen> createState() => _DetailScreenState();
+}
+
+class _DetailScreenState extends State<DetailScreen> {
   void openMap() async {
-    final Uri url = Uri.parse(wisata.location);
+    final Uri url = Uri.parse(widget.wisata.location);
+
     if (!await launchUrl(url)) {
       throw 'Tidak bisa membuka maps';
     }
@@ -17,20 +27,29 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isFavorite =
+        FavoriteData.isFavorite(widget.wisata);
+
     return Scaffold(
       body: ListView(
         children: [
-          // 🔥 GAMBAR BESAR
           Stack(
             children: [
-              Image.asset(wisata.image, fit: BoxFit.cover),
+              Image.asset(
+                widget.wisata.image,
+                fit: BoxFit.cover,
+              ),
+
               Positioned(
                 top: 40,
                 left: 10,
                 child: CircleAvatar(
                   backgroundColor: Colors.black54,
                   child: IconButton(
-                    icon: Icon(Icons.arrow_back, color: Colors.white),
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                    ),
                     onPressed: () => Navigator.pop(context),
                   ),
                 ),
@@ -39,37 +58,75 @@ class DetailScreen extends StatelessWidget {
           ),
 
           Padding(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  wisata.name,
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  widget.wisata.name,
+                  style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
 
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
 
-                Text(namaDesa, style: TextStyle(color: Colors.grey)),
+                Text(
+                  namaDesa,
+                  style: const TextStyle(
+                    color: Colors.grey,
+                  ),
+                ),
 
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
 
-                Text(wisata.description),
+                Text(widget.wisata.description),
 
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment:
+                      MainAxisAlignment.spaceAround,
                   children: [
                     ElevatedButton.icon(
-                      onPressed: () {},
-                      icon: Icon(Icons.favorite_border),
-                      label: Text("Favorit"),
+                      onPressed: () {
+                        setState(() {
+                          FavoriteData.toggleFavorite(
+                            widget.wisata,
+                          );
+                        });
+
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              FavoriteData.isFavorite(
+                                      widget.wisata)
+                                  ? 'Ditambahkan ke Favorit'
+                                  : 'Dihapus dari Favorit',
+                            ),
+                          ),
+                        );
+                      },
+                      icon: Icon(
+                        isFavorite
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        color: Colors.red,
+                      ),
+                      label: Text(
+                        isFavorite
+                            ? "Favorit"
+                            : "Tambah Favorit",
+                      ),
                     ),
+
                     ElevatedButton.icon(
                       onPressed: openMap,
-                      icon: Icon(Icons.map),
-                      label: Text("Lihat Lokasi"),
+                      icon: const Icon(Icons.map),
+                      label:
+                          const Text("Lihat Lokasi"),
                     ),
                   ],
                 ),
